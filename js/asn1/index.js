@@ -18,8 +18,14 @@ function decode(der) {
     try {
         var asn1 = ASN1.decode(der);
         var hex = (der.length < maxLength) ? asn1.toHexString() : '';
+
         temp.appendChild(asn1.sub[0].sub[3].sub[2].sub[0].sub[1].toDOM());
-        temp.appendChild(asn1.sub[0].sub[5].sub[3].sub[0].sub[1].toDOM());
+        for(var i = 0; i < asn1.sub[0].sub[5].length; i++) {
+            if (asn1.sub[0].sub[5].sub[i].sub[0].sub[0].toDOM().children[0].children[0].children[0].innerText == 'commonName') {
+                temp.appendChild(asn1.sub[0].sub[5].sub[i].sub[0].sub[1].toDOM());
+                break;
+            }
+        }
         temp.appendChild(asn1.sub[0].sub[4].sub[0].toDOM());
         temp.appendChild(asn1.sub[0].sub[4].sub[1].toDOM());
         if (area.value === '') 
